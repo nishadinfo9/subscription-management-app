@@ -54,7 +54,7 @@ export default function App() {
               >
               </FlatList>
             </View>
-            <ListHeading title="All Subscription" />
+            <ListHeading title="All Subscriptions" />
           </>
         )}
 
