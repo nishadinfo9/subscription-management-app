@@ -1,5 +1,4 @@
 import { tabs } from '@/constaints/data';
-import { TabIconProps } from '@/type';
 import { Image, View } from 'react-native';
 import { Tabs } from "expo-router";
 import clsx from 'clsx'
