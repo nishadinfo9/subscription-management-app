@@ -14,7 +14,6 @@ declare global {
         focused: boolean;
         icon: ImageSourcePropType;
     }
-
     interface Subscription {
         id: string;
         icon: ImageSourcePropType;
@@ -27,6 +26,7 @@ declare global {
         price: number;
         currency?: string;
         billing: string;
+        frequency?: string;
         renewalDate?: string;
         color?: string;
     }
