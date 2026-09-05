@@ -4,14 +4,12 @@ import { useSignIn } from '@clerk/expo';
 import { useState } from 'react';
 import { SafeAreaView as RNSafeAreaView } from 'react-native-safe-area-context';
 import { styled } from 'nativewind';
-import { usePostHog } from 'posthog-react-native';
 
 const SafeAreaView = styled(RNSafeAreaView);
 
 const SignIn = () => {
   const { signIn, errors, fetchStatus } = useSignIn();
   const router = useRouter();
-  const posthog = usePostHog();
 
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -36,9 +34,6 @@ const SignIn = () => {
 
     if (error) {
       console.error(JSON.stringify(error, null, 2));
-      posthog.capture('user_sign_in_failed', {
-        error_message: error.message,
-      });
       return;
     }
 
@@ -49,12 +44,6 @@ const SignIn = () => {
             console.log(session?.currentTask);
             return;
           }
-
-          posthog.identify(emailAddress, {
-            $set: { email: emailAddress },
-            $set_once: { first_sign_in_date: new Date().toISOString() },
-          });
-          posthog.capture('user_signed_in', { email: emailAddress });
 
           const url = decorateUrl('/(tabs)');
           if (url.startsWith('http')) {
@@ -97,13 +86,6 @@ const SignIn = () => {
             console.log(session?.currentTask);
             return;
           }
-
-          // Track successful sign-in after verification
-          posthog.identify(emailAddress, {
-            $set: { email: emailAddress },
-            $set_once: { first_sign_in_date: new Date().toISOString() },
-          });
-          posthog.capture('user_signed_in', { email: emailAddress });
 
           const url = decorateUrl('/(tabs)');
           if (url.startsWith('http')) {
